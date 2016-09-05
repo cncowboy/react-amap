@@ -4,6 +4,13 @@ import Core from "./utils/core.js"
 import Map from "./components/Map.js"
 import Maker from "./components/Maker.js"
 
+export default {
+  Core,
+  Map,
+  Maker
+};
+
+/*
 export default class App extends React.Component {
     constructor(props) {
         super(props)
@@ -153,3 +160,4 @@ Demo1 = Map.plugin([
 // ])(Demo1);
 
 ReactDOM.render(<App/>, document.getElementById("app"));
+*/
