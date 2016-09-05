@@ -10,7 +10,7 @@ class Map extends React.Component {
         this.state = {
             map_id: `amap_${Core.getRandom()}`,
             map: null,
-            maker: []
+            makers: []
         }
         //加载amap sdk
         Core.insert({
@@ -22,14 +22,14 @@ class Map extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         //todo 合并、校验cfg
-        const {map_id, maker} = this.state;
+        const {map_id, makers} = this.state;
         //初始化地图
         const map = this.initMap(map_id, nextProps);
         //重置定位点
-        maker.map(m => {
+        makers.map(m => {
             this.removeMaker(m);
         });
-        this.initMaker(map, nextProps.maker);
+        this.initMaker(map, nextProps.makers);
     }
     componentDidMount() {
         window.init = () => {
@@ -42,7 +42,7 @@ class Map extends React.Component {
                 //初始化地图
                 const map = this.initMap(map_id, this.props);
                 //初始化定位点
-                const maker = this.initMaker(map, this.props.maker);
+                const makers = this.initMaker(map, this.props.makers);
 
                 //初始化插件
                 pluginCb.call(this, map);
@@ -59,7 +59,7 @@ class Map extends React.Component {
     render() {
 
         const {map_id} = this.state;
-        const {width, height, maker} = this.props;
+        const {width, height, makers} = this.props;
         //样式
         const styles = {
             style: {
@@ -93,22 +93,23 @@ class Map extends React.Component {
 
     //初始化定位点
     initMaker(map, cfg) {
-        //设置maker
-        const maker = cfg.map(m => {
-            const maker = new AMap.Marker(m);
-            maker.setMap(map);
-            return maker;
+        //设置makers
+        const makers = cfg.map(m => {
+            const makers = new AMap.Marker(m);
+            makers.setMap(map);
+            return makers;
         });
         this.setState({
-            maker: maker
+            makers: makers
         });
-        return maker;
+        return makers;
     }
+
     //删除定位点
-    removeMaker(maker) {
-        if (maker) {
-            maker.setMap(null);
-            maker = null;
+    removeMaker(makers) {
+        if (makers) {
+            makers.setMap(null);
+            makers = null;
         }
     }
 
@@ -209,7 +210,7 @@ Map.defaultProps = {
     //中心点
     center: [116.397, 39.908],
     //...
-    maker: []
+    makers: []
 }
 
 
